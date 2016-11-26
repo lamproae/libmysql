@@ -48,27 +48,27 @@ ENDMACRO()
 
 MACRO (MYSQL_USE_BUNDLED_SSL)
   SET(INC_DIRS 
-    ${CMAKE_SOURCE_DIR}/extra/yassl/include
-    ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/include
+    ${PROJECT_SOURCE_DIR}/extra/yassl/include
+    ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/include
   )
   SET(SSL_LIBRARIES  yassl taocrypt)
   IF(CMAKE_SYSTEM_NAME MATCHES "SunOS")
     SET(SSL_LIBRARIES ${SSL_LIBRARIES} ${LIBSOCKET})
   ENDIF()
   SET(SSL_INCLUDE_DIRS ${INC_DIRS})
-  SET(SSL_INTERNAL_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/mySTL)
+  SET(SSL_INTERNAL_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/mySTL)
   SET(SSL_DEFINES "-DHAVE_YASSL -DYASSL_PREFIX -DHAVE_OPENSSL -DMULTI_THREADED")
   CHANGE_SSL_SETTINGS("bundled")
   ADD_SUBDIRECTORY(extra/yassl)
   ADD_SUBDIRECTORY(extra/yassl/taocrypt)
   GET_TARGET_PROPERTY(src yassl SOURCES)
   FOREACH(file ${src})
-    SET(SSL_SOURCES ${SSL_SOURCES} ${CMAKE_SOURCE_DIR}/extra/yassl/${file})
+    SET(SSL_SOURCES ${SSL_SOURCES} ${PROJECT_SOURCE_DIR}/extra/yassl/${file})
   ENDFOREACH()
   GET_TARGET_PROPERTY(src taocrypt SOURCES)
   FOREACH(file ${src})
     SET(SSL_SOURCES ${SSL_SOURCES}
-      ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/${file})
+      ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/${file})
   ENDFOREACH()
 ENDMACRO()
 

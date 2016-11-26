@@ -36,30 +36,30 @@ IF(CMAKE_COMPILER_IS_GNUCC AND RUN_ABI_CHECK)
     SET(COMPILER ${CMAKE_C_COMPILER})
   ENDIF()
   SET(API_PREPROCESSOR_HEADER
-    ${CMAKE_SOURCE_DIR}/include/mysql.h
-    ${CMAKE_SOURCE_DIR}/include/mysql/psi/psi_abi_v0.h
-    ${CMAKE_SOURCE_DIR}/include/mysql/psi/psi_abi_v1.h
-    ${CMAKE_SOURCE_DIR}/include/mysql/psi/psi_abi_v2.h
-    ${CMAKE_SOURCE_DIR}/include/mysql/client_plugin.h
+    ${PROJECT_SOURCE_DIR}/include/mysql.h
+    ${PROJECT_SOURCE_DIR}/include/mysql/psi/psi_abi_v0.h
+    ${PROJECT_SOURCE_DIR}/include/mysql/psi/psi_abi_v1.h
+    ${PROJECT_SOURCE_DIR}/include/mysql/psi/psi_abi_v2.h
+    ${PROJECT_SOURCE_DIR}/include/mysql/client_plugin.h
   )
 
   ADD_CUSTOM_TARGET(abi_check ALL
   COMMAND ${CMAKE_COMMAND} 
     -DCOMPILER=${COMPILER}
-    -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
-    -DBINARY_DIR=${CMAKE_BINARY_DIR}
+    -DSOURCE_DIR=${PROJECT_SOURCE_DIR}
+    -DBINARY_DIR=${PROJECT_BINARY_DIR}
     "-DABI_HEADERS=${API_PREPROCESSOR_HEADER}"
-    -P ${CMAKE_SOURCE_DIR}/cmake/do_abi_check.cmake
+    -P ${PROJECT_SOURCE_DIR}/cmake/do_abi_check.cmake
     VERBATIM
   )
 
   ADD_CUSTOM_TARGET(abi_check_all
   COMMAND ${CMAKE_COMMAND} 
     -DCOMPILER=${COMPILER} 
-    -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
-    -DBINARY_DIR=${CMAKE_BINARY_DIR}
+    -DSOURCE_DIR=${PROJECT_SOURCE_DIR}
+    -DBINARY_DIR=${PROJECT_BINARY_DIR}
     "-DABI_HEADERS=${API_PREPROCESSOR_HEADER}"
-    -P ${CMAKE_SOURCE_DIR}/cmake/do_abi_check.cmake
+    -P ${PROJECT_SOURCE_DIR}/cmake/do_abi_check.cmake
     VERBATIM
   )
 ENDIF()

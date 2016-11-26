@@ -14,11 +14,11 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 INCLUDE_DIRECTORIES(
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_SOURCE_DIR}/libmysql
-  ${CMAKE_SOURCE_DIR}/regex
-  ${CMAKE_SOURCE_DIR}/sql
-  ${CMAKE_SOURCE_DIR}/strings
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/libmysql
+  ${PROJECT_SOURCE_DIR}/regex
+  ${PROJECT_SOURCE_DIR}/sql
+  ${PROJECT_SOURCE_DIR}/strings
   ${SSL_INCLUDE_DIRS}
   ${SSL_INTERNAL_INCLUDE_DIRS}
   ${ZLIB_INCLUDE_DIR})
@@ -241,8 +241,8 @@ ENDIF()
 # be injected into the build tree by the Sun Studio part of the build.
 
 IF(CMAKE_SYSTEM_NAME MATCHES "SunOS" AND DEFINED ENV{PB2WORKDIR})
-  INSTALL(FILES ${CMAKE_BINARY_DIR}/libstlport.so
-                ${CMAKE_BINARY_DIR}/libstlport.so.1
+  INSTALL(FILES ${PROJECT_BINARY_DIR}/libstlport.so
+                ${PROJECT_BINARY_DIR}/libstlport.so.1
           DESTINATION ${INSTALL_LIBDIR} COMPONENT SharedLibraries OPTIONAL)
 ENDIF()
 

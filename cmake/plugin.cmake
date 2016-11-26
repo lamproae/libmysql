@@ -42,7 +42,7 @@ MACRO(PLUGIN_APPEND_COLLECTIONS plugin)
     FOREACH(cfile ${collections})
       FILE(READ ${cfile} contents)
       GET_FILENAME_COMPONENT(fname ${cfile} NAME)
-      FILE(APPEND ${CMAKE_SOURCE_DIR}/mysql-test/collections/${fname} "${contents}")
+      FILE(APPEND ${PROJECT_SOURCE_DIR}/mysql-test/collections/${fname} "${contents}")
       FILE(APPEND ${fcopied} "${fname}\n")
       MESSAGE(STATUS "Appended ${cfile}")
     ENDFOREACH()
@@ -57,10 +57,10 @@ MACRO(MYSQL_ADD_PLUGIN)
   )
   
   # Add common include directories
-  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include 
-                    ${CMAKE_SOURCE_DIR}/sql
-                    ${CMAKE_SOURCE_DIR}/sql/auth
-                    ${CMAKE_SOURCE_DIR}/regex
+  INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include 
+                    ${PROJECT_SOURCE_DIR}/sql
+                    ${PROJECT_SOURCE_DIR}/sql/auth
+                    ${PROJECT_SOURCE_DIR}/regex
                     ${SSL_INCLUDE_DIRS}
                     ${ZLIB_INCLUDE_DIR})
 
@@ -231,7 +231,7 @@ MACRO(MYSQL_ADD_PLUGIN)
     MYSQL_INSTALL_TARGETS(${target} DESTINATION ${INSTALL_PLUGINDIR} COMPONENT Server)
     INSTALL_DEBUG_TARGET(${target} DESTINATION ${INSTALL_PLUGINDIR}/debug)
     # Add installed files to list for RPMs
-    FILE(APPEND ${CMAKE_BINARY_DIR}/support-files/plugins.files
+    FILE(APPEND ${PROJECT_BINARY_DIR}/support-files/plugins.files
             "%attr(755, root, root) %{_prefix}/${INSTALL_PLUGINDIR}/${ARG_MODULE_OUTPUT_NAME}.so\n"
             "%attr(755, root, root) %{_prefix}/${INSTALL_PLUGINDIR}/debug/${ARG_MODULE_OUTPUT_NAME}.so\n")
     # For internal testing in PB2, append collections files
@@ -258,8 +258,8 @@ ENDMACRO()
 # Add all CMake projects under storage  and plugin 
 # subdirectories, configure sql_builtin.cc
 MACRO(CONFIGURE_PLUGINS)
-  FILE(GLOB dirs_storage ${CMAKE_SOURCE_DIR}/storage/*)
-  FILE(GLOB dirs_plugin ${CMAKE_SOURCE_DIR}/plugin/*)
+  FILE(GLOB dirs_storage ${PROJECT_SOURCE_DIR}/storage/*)
+  FILE(GLOB dirs_plugin ${PROJECT_SOURCE_DIR}/plugin/*)
   FOREACH(dir ${dirs_storage} ${dirs_plugin})
     IF (EXISTS ${dir}/CMakeLists.txt)
       ADD_SUBDIRECTORY(${dir})

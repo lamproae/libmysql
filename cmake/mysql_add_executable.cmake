@@ -24,7 +24,7 @@
 # - add version resource
 # - instruct CPack to do autenticode signing if SIGNCODE is set
 
-INCLUDE(cmake_parse_arguments)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/cmake_parse_arguments.cmake)
 
 FUNCTION (MYSQL_ADD_EXECUTABLE)
   # Pass-through arguments for ADD_EXECUTABLE

@@ -105,8 +105,8 @@ ENDIF()
 # The plugin must set its own install path for tests
 #
 FILE(GLOB plugin_tests
-  ${CMAKE_SOURCE_DIR}/plugin/*/tests
-  ${CMAKE_SOURCE_DIR}/internal/plugin/*/tests
+  ${PROJECT_SOURCE_DIR}/plugin/*/tests
+  ${PROJECT_SOURCE_DIR}/internal/plugin/*/tests
 )
 
 #

@@ -14,10 +14,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 INCLUDE_DIRECTORIES(
- ${CMAKE_SOURCE_DIR}/include
- ${CMAKE_SOURCE_DIR}/extra/yassl/include
- ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/include
- ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/mySTL)
+ ${PROJECT_SOURCE_DIR}/include
+ ${PROJECT_SOURCE_DIR}/extra/yassl/include
+ ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/include
+ ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/mySTL)
 
 ADD_DEFINITIONS(${SSL_DEFINES})
 

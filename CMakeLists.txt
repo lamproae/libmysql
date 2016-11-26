@@ -44,7 +44,7 @@ ENDIF()
 
 MESSAGE(STATUS "Running cmake version ${CMAKE_VERSION}")
 
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
 # First, decide about build type (debug or release)
 # If cmake is invoked with -DCMAKE_BUILD_TYPE, 
@@ -129,7 +129,7 @@ OPTION(WITH_DEFAULT_FEATURE_SET
   ON)
 IF(BUILD_CONFIG)
   INCLUDE(
-  ${CMAKE_SOURCE_DIR}/cmake/build_configurations/${BUILD_CONFIG}.cmake)
+  ${PROJECT_SOURCE_DIR}/cmake/build_configurations/${BUILD_CONFIG}.cmake)
 ENDIF()
 
 #cmake on 64bit windows/mac/solaris doesn't set CMAKE_SYSTEM_PROCESSOR correctly
@@ -146,7 +146,7 @@ FOREACH(_base
     ${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_VERSION}-${CMAKE_SYSTEM_PROCESSOR}
     ${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_VERSION}
     ${CMAKE_SYSTEM_NAME})
-  SET(_file ${CMAKE_SOURCE_DIR}/cmake/os/${_base}.cmake)
+  SET(_file ${PROJECT_SOURCE_DIR}/cmake/os/${_base}.cmake)
   IF(EXISTS ${_file})
     INCLUDE(${_file})
     BREAK()
@@ -181,24 +181,24 @@ INCLUDE(CheckTypeSize)
 CHECK_TYPE_SIZE("void *" SIZEOF_VOIDP)
 MESSAGE(STATUS "SIZEOF_VOIDP ${SIZEOF_VOIDP}")
 IF(WITH_DEFAULT_COMPILER_OPTIONS)
-  INCLUDE(${CMAKE_SOURCE_DIR}/cmake/build_configurations/compiler_options.cmake)
+  INCLUDE(${PROJECT_SOURCE_DIR}/cmake/build_configurations/compiler_options.cmake)
 ENDIF()
 IF(WITH_DEFAULT_FEATURE_SET)
-  INCLUDE(${CMAKE_SOURCE_DIR}/cmake/build_configurations/feature_set.cmake)
+  INCLUDE(${PROJECT_SOURCE_DIR}/cmake/build_configurations/feature_set.cmake)
 ENDIF()
 
 # Add macros
-INCLUDE(character_sets)
-INCLUDE(cpu_info)
-INCLUDE(zlib)
-INCLUDE(ssl)
-INCLUDE(mysql_version)
-INCLUDE(libutils)
-INCLUDE(dtrace)
-#INCLUDE(plugin)
-INCLUDE(install_macros)
-INCLUDE(install_layout)
-INCLUDE(mysql_add_executable)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/character_sets.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/cpu_info.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/zlib.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/ssl.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/mysql_version.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/libutils.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/dtrace.cmake)
+#INCLUDE(${PROJECT_SOURCE_DIR}/cmake/plugin.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/install_macros.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/install_layout.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/mysql_add_executable.cmake)
 
 # Handle options
 OPTION(DISABLE_SHARED 
@@ -436,7 +436,7 @@ INCLUDE(configure.cmake)
 ADD_DEFINITIONS(-DHAVE_CONFIG_H)
 INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}/include
-  ${CMAKE_SOURCE_DIR}/extra/rapidjson/include
+  ${PROJECT_SOURCE_DIR}/extra/rapidjson/include
 )
 
 # Add bundled or system zlib.
@@ -455,7 +455,7 @@ MYSQL_CHECK_SSL()
 OPTION(MYSQL_MAINTAINER_MODE
        "MySQL maintainer-specific development environment" OFF)
 
-INCLUDE(maintainer)
+INCLUDE(${PROJECT_SOURCE_DIR}/cmake/maintainer.cmake)
 
 IF(0) #WITH_UNIT_TESTS)
  ENABLE_TESTING()
@@ -502,32 +502,32 @@ ADD_SUBDIRECTORY(support-files)
 #
 # Directory where error message database is generated (GenError target)
 #
-FILE(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/sql/share)
+FILE(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/sql/share)
 
 INCLUDE(cmake/abi_check.cmake)
 INCLUDE(cmake/tags.cmake)
 
-CONFIGURE_FILE(config.h.cmake   ${CMAKE_BINARY_DIR}/include/my_config.h)
-CONFIGURE_FILE(config.h.cmake   ${CMAKE_BINARY_DIR}/include/config.h)
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/include/mysql_version.h.in
-               ${CMAKE_BINARY_DIR}/include/mysql_version.h )
+CONFIGURE_FILE(config.h.cmake   ${PROJECT_BINARY_DIR}/include/my_config.h)
+CONFIGURE_FILE(config.h.cmake   ${PROJECT_BINARY_DIR}/include/config.h)
+CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/include/mysql_version.h.in
+               ${PROJECT_BINARY_DIR}/include/mysql_version.h )
 CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/cmake/info_macros.cmake.in ${CMAKE_BINARY_DIR}/info_macros.cmake @ONLY)
+    ${PROJECT_SOURCE_DIR}/cmake/info_macros.cmake.in ${PROJECT_BINARY_DIR}/info_macros.cmake @ONLY)
 
 # Handle the "INFO_*" files.
-INCLUDE(${CMAKE_BINARY_DIR}/info_macros.cmake)
+INCLUDE(${PROJECT_BINARY_DIR}/info_macros.cmake)
 # Source: This can be done during the cmake phase, all information is
 # available, but should be repeated on each "make" just in case someone
 # does "cmake ; make ; bzr pull ; make".
-CREATE_INFO_SRC(${CMAKE_BINARY_DIR}/Docs)
+CREATE_INFO_SRC(${PROJECT_BINARY_DIR}/Docs)
 ADD_CUSTOM_TARGET(INFO_SRC ALL
-  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/info_src.cmake
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -P ${PROJECT_SOURCE_DIR}/cmake/info_src.cmake
+  WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )
 # Build flags: This must be postponed to the make phase.
 ADD_CUSTOM_TARGET(INFO_BIN ALL
-  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/info_bin.cmake
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -P ${PROJECT_SOURCE_DIR}/cmake/info_bin.cmake
+  WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )
 
 # Packaging
@@ -551,9 +551,9 @@ IF(NOT INSTALL_LAYOUT MATCHES "RPM")
 
   INSTALL(
     FILES
-      ${CMAKE_BINARY_DIR}/Docs/INFO_SRC
-      ${CMAKE_BINARY_DIR}/Docs/INFO_BIN
-      ${CMAKE_SOURCE_DIR}/Docs/ChangeLog
+      ${PROJECT_BINARY_DIR}/Docs/INFO_SRC
+      ${PROJECT_BINARY_DIR}/Docs/INFO_BIN
+      ${PROJECT_SOURCE_DIR}/Docs/ChangeLog
     DESTINATION ${INSTALL_DOCDIR}
     COMPONENT Documentation
   )

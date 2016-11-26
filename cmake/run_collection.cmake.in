@@ -15,7 +15,7 @@
 
 SET(SCRIPT "@SCRIPT@")
 SET(WITH_EMBEDDED_SERVER "@WITH_EMBEDDED_SERVER@")
-SET(CMAKE_SOURCE_DIR "@CMAKE_SOURCE_DIR@")
+SET(PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@")
 
 FILE(STRINGS "${SCRIPT}"  commands)
 FOREACH(command ${commands})
@@ -30,7 +30,7 @@ FOREACH(command ${commands})
   ENDIF()
  
   IF(command MATCHES "--suite=nist")
-    IF(NOT EXISTS ${CMAKE_SOURCE_DIR}/mysql-test/suite/nist)
+    IF(NOT EXISTS ${PROJECT_SOURCE_DIR}/mysql-test/suite/nist)
       MESSAGE(STATUS 
         "Skipping command ${command}, because NIST test suite does not exist")
       SET(SKIP_COMMAND 1)

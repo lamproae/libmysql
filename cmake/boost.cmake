@@ -243,4 +243,4 @@ ENDIF()
 MESSAGE(STATUS "BOOST_INCLUDE_DIR ${BOOST_INCLUDE_DIR}")
 
 # We have a limited set of patches/bugfixes here:
-SET(BOOST_PATCHES_DIR "${CMAKE_SOURCE_DIR}/include/boost_1_56_0")
+SET(BOOST_PATCHES_DIR "${PROJECT_SOURCE_DIR}/include/boost_1_56_0")

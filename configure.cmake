@@ -590,8 +590,8 @@ IF(NOT STACK_DIRECTION)
    "or -DSTACK_DIRECTION=-1 when calling cmake.")
   ELSE()
     TRY_RUN(STACKDIR_RUN_RESULT STACKDIR_COMPILE_RESULT    
-     ${CMAKE_BINARY_DIR} 
-     ${CMAKE_SOURCE_DIR}/cmake/stack_direction.c
+     ${PROJECT_BINARY_DIR} 
+     ${PROJECT_SOURCE_DIR}/cmake/stack_direction.c
      )
      # Test program returns 0 (down) or 1 (up).
      # Convert to -1 or 1

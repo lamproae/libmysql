@@ -13,10 +13,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/mySTL
-                    ${CMAKE_SOURCE_DIR}/extra/yassl/taocrypt/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/mySTL
+                    ${PROJECT_SOURCE_DIR}/extra/yassl/taocrypt/include)
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 ADD_DEFINITIONS(${SSL_DEFINES})
 SET(TAOCRYPT_SOURCES		src/aes.cpp src/aestables.cpp src/algebra.cpp src/arc4.cpp src/asn.cpp src/coding.cpp 
 				src/des.cpp src/dh.cpp src/dsa.cpp src/file.cpp src/hash.cpp src/integer.cpp src/md2.cpp 

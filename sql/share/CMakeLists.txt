@@ -59,8 +59,8 @@ INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/charsets
 )
 
 # Don't copy if we're building in-source.
-IF (NOT ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-  CONFIGURE_FILE(dictionary.txt ${CMAKE_BINARY_DIR}/sql/share/dictionary.txt)
+IF (NOT ${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
+  CONFIGURE_FILE(dictionary.txt ${PROJECT_BINARY_DIR}/sql/share/dictionary.txt)
 ENDIF()
 
 INSTALL(FILES ${files}

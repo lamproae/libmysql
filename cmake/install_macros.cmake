@@ -62,10 +62,10 @@ FUNCTION(INSTALL_MANPAGE file)
   ENDIF()
   GET_FILENAME_COMPONENT(file_name "${file}" NAME)
   SET(GLOB_EXPR 
-    ${CMAKE_SOURCE_DIR}/man/*${file}man.1*
-    ${CMAKE_SOURCE_DIR}/man/*${file}man.8*
-    ${CMAKE_BINARY_DIR}/man/*${file}man.1*
-    ${CMAKE_BINARY_DIR}/man/*${file}man.8*
+    ${PROJECT_SOURCE_DIR}/man/*${file}man.1*
+    ${PROJECT_SOURCE_DIR}/man/*${file}man.8*
+    ${PROJECT_BINARY_DIR}/man/*${file}man.1*
+    ${PROJECT_BINARY_DIR}/man/*${file}man.8*
    )
   IF(MYSQL_DOC_DIR)
     SET(GLOB_EXPR 
@@ -248,7 +248,7 @@ ENDFUNCTION()
 # Optionally install mysqld/client/embedded from debug build run. outside of the current build dir 
 # (unless multi-config generator is used like Visual Studio or Xcode). 
 # For Makefile generators we default Debug build directory to ${buildroot}/../debug.
-GET_FILENAME_COMPONENT(BINARY_PARENTDIR ${CMAKE_BINARY_DIR} PATH)
+GET_FILENAME_COMPONENT(BINARY_PARENTDIR ${PROJECT_BINARY_DIR} PATH)
 SET(DEBUGBUILDDIR "${BINARY_PARENTDIR}/debug" CACHE INTERNAL "Directory of debug build")
 
 
@@ -269,7 +269,7 @@ FUNCTION(INSTALL_DEBUG_TARGET target)
   ENDIF()
   GET_TARGET_PROPERTY(target_location ${target} LOCATION)
   IF(CMAKE_GENERATOR MATCHES "Makefiles")
-   STRING(REPLACE "${CMAKE_BINARY_DIR}" "${DEBUGBUILDDIR}"  debug_target_location "${target_location}")
+   STRING(REPLACE "${PROJECT_BINARY_DIR}" "${DEBUGBUILDDIR}"  debug_target_location "${target_location}")
   ELSE()
    STRING(REPLACE "${CMAKE_CFG_INTDIR}" "Debug"  debug_target_location "${target_location}" )
   ENDIF()

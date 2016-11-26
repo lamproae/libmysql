@@ -23,7 +23,8 @@
 
 
 # Get the macros which the "INFO_*" files.
-INCLUDE(${CMAKE_BINARY_DIR}/info_macros.cmake)
+# INCLUDE(${PROJECT_SOURCE_DIR}/info_macros.cmake)
+INCLUDE(info_macros.cmake)
 
 # Here is where the action is.
 CREATE_INFO_BIN()
